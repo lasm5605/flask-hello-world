@@ -12,3 +12,38 @@ def testing():
     conn = psycopg2.connect("postgresql://lab10_oyps_user:Gu6iR4E2FTf8OjsY2O34WzLlfsxSk2ah@dpg-dbp4ba142hec73bhoh30-a/lab10_oyps")
     conn.close()
     return "Database Connection Successful"
+
+@app.route('/db_create')
+def create():
+    conn = psycopg2.connect("postgresql://lab10_oyps_user:Gu6iR4E2FTf8OjsY2O34WzLlfsxSk2ah@dpg-dbp4ba142hec73bhoh30-a/lab10_oyps")
+    cur = conn.cursor()
+    cur.execute('''
+    CREATE TABLE IF NOT EXISTS Basketball(
+        First varchar(255),
+        Last varchar(255),
+        City varchar(255),
+        Name varchar(255),
+        Number int
+        );
+        ''')
+    conn.commit()
+    conn.close()
+    return "Basketball Table Successfully Created"
+
+@app.route('/db_insert')
+def insert():
+    conn = psycopg2.connect("postgresql://lab10_oyps_user:Gu6iR4E2FTf8OjsY2O34WzLlfsxSk2ah@dpg-dbp4ba142hec73bhoh30-a/lab10_oyps")
+    cur = conn.cursor()
+    cur.execute('''
+    INSERT INTO Basketball (First, Last, City, Name, Number)
+    Values
+    ('Jayson', 'Tatum', 'Boston', 'Celtics', 0),
+    ('Stephen', 'Curry', 'San Francisco', 'Warriors', 30),
+    ('Nikola', 'Jokic', 'Denver', 'Nuggets', 15),
+    ('Kawhi', 'Leonard', 'Los Angeles', 'Clippers', 2);
+    ''')
+    conn.commit()
+    conn.close()
+    return "Basketball Table Successfully Populated"
+    
+    
